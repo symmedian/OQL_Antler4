@@ -1,0 +1,1 @@
+where get('field4') IN SET (value1) AND get('field1') = value1 AND get('field2') <= value2 OR get('field3') > value3 OR get('field6') IN SET (value10)

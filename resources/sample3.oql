@@ -1,0 +1,1 @@
+where get('field3') = '37L' AND get('active') = 'true' AND field7 = 45L

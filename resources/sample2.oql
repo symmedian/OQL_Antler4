@@ -1,0 +1,1 @@
+where field3 = 'value3' AND get('field4') IN SET ('value1', 'value3') OR (get('field5') = 'valuex' AND get('field6') = 123445.87 AND get('field7') > 'value7')
