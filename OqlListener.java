@@ -6,6 +6,9 @@ public interface OqlListener extends ParseTreeListener {
 	void enterSimple_get_condition(OqlParser.Simple_get_conditionContext ctx);
 	void exitSimple_get_condition(OqlParser.Simple_get_conditionContext ctx);
 
+	void enterActive_condition(OqlParser.Active_conditionContext ctx);
+	void exitActive_condition(OqlParser.Active_conditionContext ctx);
+
 	void enterCondition(OqlParser.ConditionContext ctx);
 	void exitCondition(OqlParser.ConditionContext ctx);
 

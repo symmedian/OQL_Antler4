@@ -9,6 +9,9 @@ public class OqlBaseListener implements OqlListener {
 	@Override public void enterSimple_get_condition(OqlParser.Simple_get_conditionContext ctx) { }
 	@Override public void exitSimple_get_condition(OqlParser.Simple_get_conditionContext ctx) { }
 
+	@Override public void enterActive_condition(OqlParser.Active_conditionContext ctx) { }
+	@Override public void exitActive_condition(OqlParser.Active_conditionContext ctx) { }
+
 	@Override public void enterCondition(OqlParser.ConditionContext ctx) { }
 	@Override public void exitCondition(OqlParser.ConditionContext ctx) { }
 

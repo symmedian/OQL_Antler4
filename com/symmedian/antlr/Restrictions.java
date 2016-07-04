@@ -7,6 +7,7 @@ import java.util.Collection;
 /**
  * Created by jantaljaard on 25/06/2016.
  * Copyright (C) Symmedian Pty Ltd 2007 - 2014
+ * Stub class for Restrictions
  */
 public class Restrictions {
 

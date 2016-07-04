@@ -1,1 +1,1 @@
-where get('field3') = '37L' AND get('active') = 'true' AND field7 = 45L
+where field3 > '2345L' AND get('active') = 'true' AND get('field4') IN SET ('value1', 'value3') OR (get('field5') = 'valuex' AND get('field6') = 123445.87 OR get('field7') > 'value7')
