@@ -21,6 +21,9 @@ public interface OqlListener extends ParseTreeListener {
 	void enterWhereclause(OqlParser.WhereclauseContext ctx);
 	void exitWhereclause(OqlParser.WhereclauseContext ctx);
 
+	void enterIn_get_condition(OqlParser.In_get_conditionContext ctx);
+	void exitIn_get_condition(OqlParser.In_get_conditionContext ctx);
+
 	void enterIn_condition(OqlParser.In_conditionContext ctx);
 	void exitIn_condition(OqlParser.In_conditionContext ctx);
 

@@ -24,6 +24,9 @@ public class OqlBaseListener implements OqlListener {
 	@Override public void enterWhereclause(OqlParser.WhereclauseContext ctx) { }
 	@Override public void exitWhereclause(OqlParser.WhereclauseContext ctx) { }
 
+	@Override public void enterIn_get_condition(OqlParser.In_get_conditionContext ctx) { }
+	@Override public void exitIn_get_condition(OqlParser.In_get_conditionContext ctx) { }
+
 	@Override public void enterIn_condition(OqlParser.In_conditionContext ctx) { }
 	@Override public void exitIn_condition(OqlParser.In_conditionContext ctx) { }
 

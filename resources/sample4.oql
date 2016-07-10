@@ -1,0 +1,1 @@
+where field1 > '123L' AND field2 = 'FOO BAR ' OR get('active') AND get('field3') = 3.5

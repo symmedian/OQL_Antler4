@@ -22,16 +22,13 @@ public class OqlQueryParser {
 		String sqlQuery = "where field3 > 2345L AND get('field4') IN SET ('value1', 'value3') OR (get('field5') = 'valuex' AND get('field6') = 123445.87 OR get('field7') > 'value7')";
 		//String sqlQuery = "where field3 < 363636363636363L AND NOT get('active') AND field7 = ''";
 
-		// pre-proses 'difficult' cases
+		// pre-process 'difficult' cases
 		preProcessQuery(sqlQuery);
 
-		// Get our lexer
 		OqlLexer lexer = new OqlLexer(new ANTLRInputStream(sqlQuery));
 
-		// Get a list of matched tokens
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-		// Pass the tokens to the parser
 		OqlParser parser = new OqlParser(tokens);
 
 		// Specify our entry point
@@ -46,7 +43,7 @@ public class OqlQueryParser {
 	private static String preProcessQuery(String sqlQuery) {
 		Pattern pattern = Pattern.compile(" [0-9]*L ");
 		Matcher matcher = pattern.matcher(sqlQuery);
-		if (matcher.matches()) {
+		if (matcher.find()) {
 			for(int i = 0; i < matcher.groupCount(); i++) {
 				String match = matcher.group(i);
 			}
@@ -72,17 +69,7 @@ public class OqlQueryParser {
 			Collections.reverse(criterionList);
 
 			com.symmedian.antlr.Criterion combined = combineCriteria(criterionList, logicalList, 0);
-
-		}
-
-		private ArrayList<String> getLogicals(OqlParser.CriteriaContext ctx) {
-			ArrayList<String> logicalList = new ArrayList<String>();
-			// grab every second child
-			for(int i = 1; i < ctx.getChildCount(); i = i + 2) {
-				String logical1 = ctx.getChild(i).getText();
-				logicalList.add(logical1);
-			}
-			return logicalList;
+			// At this processing is complete and combined criteria can be used in query
 		}
 
 		@Override
@@ -105,14 +92,24 @@ public class OqlQueryParser {
 
 		@Override
 		public void exitIn_condition(OqlParser.In_conditionContext ctx) {
-			String field = ctx.GET_FIELD().getText();
+			System.out.println("exitIn_condition " + ctx.getText());
+			String field = ctx.FIELD().getText();
 			ArrayList<String> values = new ArrayList<String>();
 
 			for(int i = 0; i <= ctx.value_array().getChildCount(); i = i + 2) {
 				values.add(ctx.value_array().getChild(i).getText());
 			}
 			stack.addLast(com.symmedian.antlr.Restrictions.in(field, values));
-			System.out.println("exitIn_condition " + ctx.getText());
+		}
+
+		@Override
+		public void exitActive_condition(OqlParser.Active_conditionContext ctx) {
+			super.exitActive_condition(ctx);
+		}
+
+		@Override
+		public void exitIn_get_condition(OqlParser.In_get_conditionContext ctx) {
+			super.exitIn_get_condition(ctx);
 		}
 
 		@Override
@@ -145,6 +142,16 @@ public class OqlQueryParser {
 			stack.addLast(combined);
 		}
 
+		private ArrayList<String> getLogicals(OqlParser.CriteriaContext ctx) {
+			ArrayList<String> logicalList = new ArrayList<String>();
+			// grab every second child
+			for(int i = 1; i < ctx.getChildCount(); i = i + 2) {
+				String logical1 = ctx.getChild(i).getText();
+				logicalList.add(logical1);
+			}
+			return logicalList;
+		}
+
 		private com.symmedian.antlr.Criterion combineCriteria(ArrayList<com.symmedian.antlr.Criterion> criterionList, ArrayList<String> logicalList, int index) {
 
 			String logical = logicalList.get(index);
@@ -174,7 +181,7 @@ public class OqlQueryParser {
 			return combinedCriterion;
 		}
 
-		protected com.symmedian.antlr.Criterion createRestriction(String field, String comparator, String value) {
+		private com.symmedian.antlr.Criterion createRestriction(String field, String comparator, String value) {
 			if(comparator.equals("=")) {
 				return com.symmedian.antlr.Restrictions.equal(field, value);
 			}
@@ -194,6 +201,4 @@ public class OqlQueryParser {
 		}
 	}
 
-	public enum Comparator {
-	}
 }
